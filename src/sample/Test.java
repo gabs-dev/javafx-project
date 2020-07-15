@@ -20,16 +20,16 @@ public class Test {
 
         Person p = new Person();
         p.setId(6L);
-        p.setName("Pedro");
-        p.setEmail("pedro@gmail.com");
-        p.setPassword("12345678");
+//        p.setName("Pedro");
+//        p.setEmail("pedro@gmail.com");
+//        p.setPassword("12345678");
 
         PersonDao dao = new PersonDao();
         try {
-            dao.update(p);
-            System.out.println("Usuário atualizado com sucesso!");
+            dao.delete(p);
+            System.out.println("Usuário excluído com sucesso!");
         } catch (DbException e) {
-            System.err.println("Erro ao atualizar o usuário!");
+            System.err.println("Erro ao exxcluir o usuário!");
             System.err.println(e.getMessage());
         }
 
