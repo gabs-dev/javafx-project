@@ -4,6 +4,8 @@ import dao.PersonDao;
 import jdbc.exception.DbException;
 import model.Person;
 
+import java.util.List;
+
 public class Test {
 
     public static void main(String[] args) {
@@ -18,18 +20,20 @@ public class Test {
 //            e.printStackTrace();
 //        }
 
-        Person p = new Person();
-        p.setId(6L);
+        //Person p = new Person();
+        //p.setId(6L);
 //        p.setName("Pedro");
 //        p.setEmail("pedro@gmail.com");
 //        p.setPassword("12345678");
 
         PersonDao dao = new PersonDao();
         try {
-            dao.delete(p);
-            System.out.println("Usuário excluído com sucesso!");
+            //dao.delete(p);
+            //System.out.println("Usuário excluído com sucesso!");
+            List<Person> list = dao.findAll();
+            list.forEach(System.out::println);
         } catch (DbException e) {
-            System.err.println("Erro ao exxcluir o usuário!");
+            System.err.println("Erro exibir os usuários!");
             System.err.println(e.getMessage());
         }
 

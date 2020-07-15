@@ -6,9 +6,12 @@ import model.Person;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PersonDao {
+public class PersonDao implements IDao<Person> {
 
     private Connection conn;
 
@@ -16,6 +19,7 @@ public class PersonDao {
         this.conn = ConnectionFactory.getConnection();
     }
 
+    @Override
     public void add(Person obj) {
         PreparedStatement st = null;
         String sql = "INSERT INTO person (name, email, password) " +
@@ -32,9 +36,11 @@ public class PersonDao {
 
             conn.commit();
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 conn.rollback();
             } catch (SQLException e1) {
+                e1.printStackTrace();
                 throw new DbException(e1.getMessage());
             }
             throw new DbException(e.getMessage());
@@ -44,6 +50,7 @@ public class PersonDao {
         }
     }
 
+    @Override
     public void update(Person obj) {
         PreparedStatement st = null;
         String sql = "UPDATE person " +
@@ -62,9 +69,11 @@ public class PersonDao {
 
             conn.commit();
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 conn.rollback();
             } catch (SQLException e1) {
+                e1.printStackTrace();
                 throw new DbException(e1.getMessage());
             }
             throw new DbException(e.getMessage());
@@ -74,6 +83,7 @@ public class PersonDao {
         }
     }
 
+    @Override
     public void delete(Person obj) {
         PreparedStatement st = null;
         String sql = "DELETE FROM person WHERE id = ?;";
@@ -87,9 +97,11 @@ public class PersonDao {
 
             conn.commit();
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 conn.rollback();
             } catch (SQLException e1) {
+                e1.printStackTrace();
                 throw new DbException(e1.getMessage());
             }
             throw new DbException(e.getMessage());
@@ -97,6 +109,41 @@ public class PersonDao {
             ConnectionFactory.closeStatement(st);
             ConnectionFactory.closeConnection();
         }
+    }
+
+    @Override
+    public List<Person> findAll() {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Person> list = new ArrayList<>();
+        String sql = "SELECT * FROM person";
+        try {
+            st = conn.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while(rs.next()) {
+                Person p = instantiatePerson(rs);
+                list.add(p);
+            }
+
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DbException(e.getMessage());
+        } finally {
+            ConnectionFactory.closeStatement(st);
+            ConnectionFactory.closeResultSet(rs);
+            ConnectionFactory.closeConnection();
+        }
+    }
+
+    private Person instantiatePerson(ResultSet rs) throws SQLException {
+        Person obj = new Person();
+        obj.setId(rs.getLong("id"));
+        obj.setName(rs.getString("name"));
+        obj.setEmail(rs.getString("email"));
+        obj.setPassword(rs.getString("password"));
+        return obj;
     }
 
 }
