@@ -1,15 +1,12 @@
 package jdbc;
 
-import javafx.scene.control.Alert.AlertType;
-import view.util.Alerts;
+import exception.DbException;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ConnectionFactory {
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         try {
             String user = "postgres";
             String password = "1234567";
@@ -19,10 +16,27 @@ public class ConnectionFactory {
             return DriverManager.getConnection("jdbc:postgresql://" + serverAddress +
                     "/" + databaseName, user, password);
         } catch (SQLException e) {
-            String message = "Falha ao realizar conexão com o banco de dados!";
-            //Alerts.showAlert("Erro", null, message, AlertType.ERROR);
-            System.err.println(message);
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void closeStatement(Statement st) {
+        if (st != null) {
+            try {
+                st.close();
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            }
+        }
+    }
+
+    public static void closeResultSet(ResultSet rs) {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            }
         }
     }
 

@@ -7,6 +7,10 @@ public class Person {
     private String email;
     private String password;
 
+    public Person() {
+
+    }
+
     public Person(Long id, String name, String email, String password) {
         this.id = id;
         this.name = name;
