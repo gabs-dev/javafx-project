@@ -14,7 +14,7 @@ public class Login extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml")); // carrega fxml
         Scene scene = new Scene(root); // coloca o fxml em uma cena
-        scene.getStylesheets().add("/resources/css/style.css");
+        scene.getStylesheets().add("/resources/css/loginStyle.css");
         stage.setTitle("Login");
         stage.setResizable(false);
         stage.setScene(scene); // coloca a cena em uma janela
