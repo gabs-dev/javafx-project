@@ -1,11 +1,8 @@
 package sample;
 
 import dao.PersonDao;
-import exception.DbException;
-import jdbc.ConnectionFactory;
+import jdbc.exception.DbException;
 import model.Person;
-
-import javax.swing.*;
 
 public class Test {
 
@@ -22,16 +19,17 @@ public class Test {
 //        }
 
         Person p = new Person();
-        p.setName("Rafael");
-        p.setEmail("rafael@gmail.com");
-        //p.setPassword("rafael");
+        p.setId(6L);
+        p.setName("Pedro");
+        p.setEmail("pedro@gmail.com");
+        p.setPassword("12345678");
 
         PersonDao dao = new PersonDao();
         try {
-            dao.add(p);
-            System.out.println("Usuário salvo com sucesso!");
+            dao.update(p);
+            System.out.println("Usuário atualizado com sucesso!");
         } catch (DbException e) {
-            System.err.println("Erro ao salvar o usuário!");
+            System.err.println("Erro ao atualizar o usuário!");
             System.err.println(e.getMessage());
         }
 

@@ -1,22 +1,37 @@
 package jdbc;
 
-import exception.DbException;
+import jdbc.exception.DbException;
 
 import java.sql.*;
 
 public class ConnectionFactory {
 
-    public static Connection getConnection() {
-        try {
-            String user = "postgres";
-            String password = "1234567";
-            String databaseName = "javafx-project";
-            String serverAddress = "localhost";
+    private static Connection conn = null;
 
-            return DriverManager.getConnection("jdbc:postgresql://" + serverAddress +
-                    "/" + databaseName, user, password);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public static Connection getConnection() {
+        if (conn == null) {
+            try {
+                String user = "postgres";
+                String password = "1234567";
+                String databaseName = "javafx-project";
+                String serverAddress = "localhost";
+
+                conn = DriverManager.getConnection("jdbc:postgresql://" + serverAddress +
+                        "/" + databaseName, user, password);
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            }
+        }
+        return conn;
+    }
+
+    public static void closeConnection() {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            }
         }
     }
 
