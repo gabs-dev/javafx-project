@@ -13,3 +13,13 @@
 .text-field {
     -fx-background-radius: 10;
 }
+
+#mainView {
+    -fx-background-color: linear-gradient(to right, #29b6f6, #0277bd);
+}
+
+.principalButtons {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-text-fill: #0277bd;
+}
