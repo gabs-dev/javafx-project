@@ -2,10 +2,17 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import sample.Login;
+import sample.Principal;
+import util.Alerts;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,13 +35,49 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         btnLogin.setOnMouseClicked((MouseEvent e) -> {
-            System.out.println("Entrou");
+            login();
+        });
+
+        btnLogin.setOnKeyPressed((KeyEvent e) -> {
+            if(e.getCode() == KeyCode.ENTER) {
+                login();
+            }
         });
 
         btnExit.setOnMouseClicked((MouseEvent e) -> {
-            System.out.println("Saiu");
+            close();
         });
 
+        btnExit.setOnKeyPressed((KeyEvent e) -> {
+            if(e.getCode() == KeyCode.ENTER) {
+                close();
+            }
+        });
+
+        txtPassword.setOnKeyPressed((KeyEvent e) -> {
+            if(e.getCode() == KeyCode.ENTER) {
+                login();
+            }
+        });
+
+    }
+
+    private void close() {
+        Login.getStage().close();
+    }
+
+    private void login() {
+        if(txtUser.getText().equals("root") && txtPassword.getText().equals("1234")) {
+            Principal p = new Principal();
+            close();
+            try {
+                p.start(new Stage());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        } else {
+            Alerts.showAlert("Erro", null, "Usuário ou senha inválido(s)", AlertType.ERROR);
+        }
     }
 
 }
