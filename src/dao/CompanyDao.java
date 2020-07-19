@@ -3,7 +3,6 @@ package dao;
 import jdbc.ConnectionFactory;
 import jdbc.exception.DbException;
 import model.Company;
-import model.Person;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

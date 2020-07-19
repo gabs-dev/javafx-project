@@ -9,7 +9,7 @@ public class ConnectionFactory {
     private static Connection conn = null;
 
     public static Connection getConnection() {
-        if (conn == null) {
+        if(conn == null) {
             try {
                 String user = "postgres";
                 String password = "1234567";
@@ -29,6 +29,7 @@ public class ConnectionFactory {
         if (conn != null) {
             try {
                 conn.close();
+                conn = null;
             } catch (SQLException e) {
                 throw new DbException(e.getMessage());
             }

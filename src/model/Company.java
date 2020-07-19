@@ -56,4 +56,13 @@ public class Company {
         this.cnpj = cnpj;
     }
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                '}';
+    }
 }
