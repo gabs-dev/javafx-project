@@ -137,6 +137,31 @@ public class PersonDao implements IDao<Person> {
         }
     }
 
+    public Person findByEmail(String email) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Person p = null;
+        String sql = "SELECT * FROM person WHERE email = ?";
+        try {
+            st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                p = instantiatePerson(rs);
+            }
+
+            return p;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DbException(e.getMessage());
+        } finally {
+            ConnectionFactory.closeStatement(st);
+            ConnectionFactory.closeResultSet(rs);
+            ConnectionFactory.closeConnection();
+        }
+    }
+
     private Person instantiatePerson(ResultSet rs) throws SQLException {
         Person obj = new Person();
         obj.setId(rs.getLong("id"));

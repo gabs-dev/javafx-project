@@ -1,5 +1,6 @@
 package controller;
 
+import dao.PersonDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -10,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.Person;
 import sample.Login;
 import sample.Principal;
 import util.Alerts;
@@ -67,16 +69,23 @@ public class LoginController implements Initializable {
     }
 
     private void login() {
-        if(txtUser.getText().equals("root") && txtPassword.getText().equals("1234")) {
-            Principal p = new Principal();
-            close();
-            try {
-                p.start(new Stage());
-            } catch (Exception exception) {
-                exception.printStackTrace();
+        PersonDao dao = new PersonDao();
+        Person p;
+        if (!(txtUser.getText().equals("")) && !(txtPassword.getText().equals(""))) {
+            p = dao.findByEmail(txtUser.getText());
+            if (p != null && p.getPassword().equals(txtPassword.getText())) {
+                Principal principal = new Principal();
+                close();
+                try {
+                    principal.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Alerts.showAlert("Erro", null, "Usuário ou senha inválido(s)", AlertType.ERROR);
             }
         } else {
-            Alerts.showAlert("Erro", null, "Usuário ou senha inválido(s)", AlertType.ERROR);
+            Alerts.showAlert("Erro", null, "Preecha o(s) campo(s) de email e/ou senha", AlertType.ERROR);
         }
     }
 
