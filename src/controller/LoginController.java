@@ -12,8 +12,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Person;
-import sample.Login;
-import sample.Principal;
+import application.Login;
+import application.Principal;
 import util.Alerts;
 
 import java.net.URL;

@@ -1,7 +1,7 @@
 package controller;
 
+import application.*;
 import dao.CompanyDao;
-import dao.PersonDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -12,12 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jdbc.exception.DbException;
 import model.Company;
-import model.Person;
-import sample.ListPeople;
-import sample.Principal;
-import sample.RegisterCompany;
-import sample.RegisterPerson;
 import util.Alerts;
+import util.Navigation;
 
 import java.net.URL;
 import java.util.List;
@@ -83,55 +79,27 @@ public class PrincipalController implements Initializable {
     }
 
     private void openAddCompany() {
-        RegisterCompany registerCompany = new RegisterCompany();
         close();
-        try {
-            registerCompany.start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Navigation.openScreen(new RegisterCompany());
     }
 
     private void openAddPerson() {
-        RegisterPerson registerPerson = new RegisterPerson();
         close();
-        try {
-            registerPerson.start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Navigation.openScreen(new RegisterPerson());
     }
 
     private void listCompanies() {
-        try {
-            CompanyDao dao = new CompanyDao();
-            StringBuilder sb = new StringBuilder();
-            sb.append("LISTANDO EMPRESAS\n");
-            List<Company> list = dao.findAll();
-            for (Company c : list) {
-                sb.append(c);
-                sb.append("\n------------------------\n");
-            }
-            System.out.println(sb.toString());
-        } catch (DbException e) {
-            String message = "Não foi possível listar as empresas";
-            message += "\n" + e.getMessage();
-            Alerts.showAlert("Erro", null, message, AlertType.ERROR);
-        }
+        Navigation.openScreen(new ListCompanies());
+        close();
     }
 
     private void listPeople() {
-        ListPeople screen = new ListPeople();
-        try {
-            close();
-            screen.start(new Stage());
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        Navigation.openScreen(new ListPeople());
+        close();
     }
 
     private void close() {
-        Principal.getStage().close();
+        Navigation.close(Principal.getStage());
     }
 
 }

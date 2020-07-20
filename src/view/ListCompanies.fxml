@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="546.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListCompaniesController">
+   <children>
+      <TableView fx:id="table" layoutX="18.0" layoutY="53.0" prefHeight="332.0" prefWidth="510.0">
+        <columns>
+          <TableColumn fx:id="clmID" prefWidth="49.0" text="ID" />
+          <TableColumn fx:id="clmName" minWidth="0.0" prefWidth="153.0" text="Nome" />
+            <TableColumn fx:id="clmEmail" prefWidth="150.0" text="Email" />
+            <TableColumn fx:id="clmCNPJ" prefWidth="157.0" text="CNPJ" />
+        </columns>
+      </TableView>
+      <Label layoutX="227.0" layoutY="14.0" text="Lista de Empresas">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnDelete" layoutX="551.0" layoutY="53.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Deletar" />
+      <Button fx:id="btnUpdate" layoutX="551.0" layoutY="93.0" mnemonicParsing="false" text="Atualizar" />
+      <Button fx:id="btnGoBack" layoutX="551.0" layoutY="131.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="← Voltar" />
+   </children>
+</AnchorPane>

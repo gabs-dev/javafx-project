@@ -1,4 +1,4 @@
-package sample;
+package application;
 
 import dao.PersonDao;
 import jdbc.exception.DbException;

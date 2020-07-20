@@ -1,4 +1,4 @@
-package sample;
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,16 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ListPeople extends Application {
+public class Login extends Application {
 
     private static Stage stage;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ListPeople.fxml")); // carrega fxml
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml")); // carrega fxml
         Scene scene = new Scene(root); // coloca o fxml em uma cena
         scene.getStylesheets().add("/resources/css/style.css");
-        stage.setTitle("Lista de pessoas");
+        stage.setTitle("Login");
         stage.setResizable(false);
         stage.setScene(scene); // coloca a cena em uma janela
         stage.show(); // abre a janela
@@ -27,7 +27,7 @@ public class ListPeople extends Application {
     }
 
     public static void setStage(Stage stage) {
-        ListPeople.stage = stage;
+        Login.stage = stage;
     }
 
     public static void main(String[] args) {

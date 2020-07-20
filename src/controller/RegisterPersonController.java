@@ -13,8 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jdbc.exception.DbException;
 import model.Person;
-import sample.Principal;
-import sample.RegisterPerson;
+import application.Principal;
+import application.RegisterPerson;
 import util.Alerts;
 
 import java.net.URL;

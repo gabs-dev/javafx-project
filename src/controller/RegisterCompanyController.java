@@ -12,13 +12,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jdbc.exception.DbException;
 import model.Company;
-import sample.Principal;
-import sample.RegisterCompany;
+import application.Principal;
+import application.RegisterCompany;
 import util.Alerts;
 import util.CpfCnpjValidator;
 
 import java.net.URL;
-import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 
 public class RegisterCompanyController implements Initializable {
