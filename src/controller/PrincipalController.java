@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import jdbc.exception.DbException;
 import model.Company;
 import model.Person;
+import sample.ListPeople;
 import sample.Principal;
 import sample.RegisterCompany;
 import sample.RegisterPerson;
@@ -120,20 +121,12 @@ public class PrincipalController implements Initializable {
     }
 
     private void listPeople() {
+        ListPeople screen = new ListPeople();
         try {
-            PersonDao dao = new PersonDao();
-            StringBuilder sb = new StringBuilder();
-            sb.append("LISTANDO USUÁRIOS\n");
-            List<Person> list = dao.findAll();
-            for (Person p : list) {
-                sb.append(p);
-                sb.append("\n------------------------\n");
-            }
-            System.out.println(sb.toString());
-        } catch (DbException e) {
-            String message = "Não foi possível listar os usuários";
-            message += "\n" + e.getMessage();
-            Alerts.showAlert("Erro", null, message, AlertType.ERROR);
+            close();
+            screen.start(new Stage());
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 

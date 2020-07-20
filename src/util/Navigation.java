@@ -1,17 +1,19 @@
 package util;
 
+import javafx.application.Application;
 import javafx.stage.Stage;
-import sample.Principal;
-
 public class Navigation {
 
-    public static void openPrincipal() {
-        Principal p = new Principal();
+    public static <T extends Application> void openScreen(T t) {
         try {
-            p.start(new Stage());
+            t.start(new Stage());
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+    }
+
+    public static void close(Stage stage) {
+        stage.close();
     }
     
 }
