@@ -3,14 +3,14 @@ package controller;
 import application.ListCompanies;
 import application.Principal;
 import dao.CompanyDao;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import jdbc.exception.DbException;
@@ -19,6 +19,7 @@ import util.Alerts;
 import util.Navigation;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ListCompaniesController implements Initializable {
@@ -47,6 +48,8 @@ public class ListCompaniesController implements Initializable {
     @FXML
     private Button btnGoBack;
 
+    private Company selected;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
@@ -54,6 +57,21 @@ public class ListCompaniesController implements Initializable {
         btnGoBack.setOnMouseClicked((MouseEvent e) -> {
             Navigation.openScreen(new Principal());
             Navigation.close(ListCompanies.getStage());
+        });
+
+        btnDelete.setOnMouseClicked((MouseEvent e) -> {
+            delete();
+        });
+
+        btnUpdate.setOnMouseClicked((MouseEvent e) -> {
+            table.setItems(updateTable());
+        });
+
+        table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Company>() {
+            @Override
+            public void changed(ObservableValue<? extends Company> observableValue, Company oldValue, Company newValue) {
+                selected = newValue;
+            }
         });
     }
 
@@ -70,9 +88,34 @@ public class ListCompaniesController implements Initializable {
         try {
             return FXCollections.observableArrayList(dao.findAll());
         } catch (DbException e) {
-            Alerts.showAlert("Erro", "", "Erro ao exibir a lista de empresas!\n" + e.getMessage(), Alert.AlertType.ERROR);
+            Alerts.showAlert("Erro", "",
+                    "Erro ao exibir a lista de empresas!\n" + e.getMessage(), AlertType.ERROR);
             e.printStackTrace();
             throw new DbException(e.getMessage());
         }
     }
+
+    private void delete() {
+        CompanyDao dao = new CompanyDao();
+        if (selected != null) {
+            try {
+                Optional<ButtonType> result = Alerts.showConfirmation("Confirmação",
+                        "Tem certeza que deseja excluir a empresa " + selected.getName() + "?");
+                if (result.get() == ButtonType.OK) {
+                    dao.delete(selected);
+                    Alerts.showAlert("Excluída",  null,
+                            "Empresa excluída com sucesso!", AlertType.INFORMATION);
+                    table.setItems(updateTable());
+                }
+            } catch (DbException e) {
+                e.printStackTrace();
+                Alerts.showAlert("Erro", null,
+                        "Não foi possível excluir a empresa!\n" + e.getMessage(), AlertType.ERROR);
+            }
+        } else {
+            Alerts.showAlert("Selecione uma empresa", null,
+                    "É preciso selecionar uma empresa para excluir!", AlertType.WARNING);
+        }
+    }
+
 }

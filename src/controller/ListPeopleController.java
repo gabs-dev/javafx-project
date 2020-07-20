@@ -84,7 +84,8 @@ public class ListPeopleController implements Initializable {
         try {
             return FXCollections.observableArrayList(dao.findAll());
         } catch (DbException e) {
-            Alerts.showAlert("Erro", "", "Erro ao exibir a lista de pessoas!\n" + e.getMessage(), AlertType.ERROR);
+            Alerts.showAlert("Erro", "",
+                    "Erro ao exibir a lista de pessoas!\n" + e.getMessage(), AlertType.ERROR);
             e.printStackTrace();
             throw new DbException(e.getMessage());
         }
@@ -94,18 +95,22 @@ public class ListPeopleController implements Initializable {
         PersonDao dao = new PersonDao();
         if (selected != null) {
             try {
-                Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que deseja excluir o(a) usuário(a) " + selected.getName());
+                Optional<ButtonType> result = Alerts.showConfirmation(
+                        "Confirmação", "Tem certeza que deseja excluir o(a) usuário(a) " + selected.getName() + "?");
                 if (result.get() == ButtonType.OK) {
                     dao.delete(selected);
-                    Alerts.showAlert("Excluído",  null, "Usuário excluído com sucesso!", AlertType.INFORMATION);
+                    Alerts.showAlert("Excluído",  null,
+                            "Usuário excluído com sucesso!", AlertType.INFORMATION);
                     table.setItems(updateTable());
                 }
             } catch (DbException e) {
                 e.printStackTrace();
-                Alerts.showAlert("Erro", null, "Não foi possível excluir a pessoa!\n" + e.getMessage(), AlertType.ERROR);
+                Alerts.showAlert("Erro", null,
+                        "Não foi possível excluir a pessoa!\n" + e.getMessage(), AlertType.ERROR);
             }
         } else {
-            Alerts.showAlert("Selecione uma pessa", null, "É preciso selecionar uma pessoa para excluir!", AlertType.WARNING);
+            Alerts.showAlert("Selecione uma pessoa", null,
+                    "É preciso selecionar uma pessoa para excluir!", AlertType.WARNING);
         }
     }
 
