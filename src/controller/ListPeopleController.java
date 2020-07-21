@@ -1,5 +1,6 @@
 package controller;
 
+import application.UpdatePerson;
 import dao.PersonDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -59,6 +60,9 @@ public class ListPeopleController implements Initializable {
     @FXML
     private Label lblEmail;
 
+    @FXML
+    private Button btnEdit;
+
     private Person selected;
 
     @Override
@@ -76,6 +80,10 @@ public class ListPeopleController implements Initializable {
 
         btnUpdate.setOnMouseClicked((MouseEvent e) -> {
             table.setItems(updateTable());
+        });
+
+        btnEdit.setOnMouseClicked((MouseEvent e) -> {
+            edit();
         });
 
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
@@ -126,6 +134,15 @@ public class ListPeopleController implements Initializable {
         } else {
             Alerts.showAlert("Selecione uma pessoa", null,
                     "É preciso selecionar uma pessoa para excluir!", AlertType.WARNING);
+        }
+    }
+
+    private void edit() {
+        if(selected != null) {
+            Navigation.openScreen(new UpdatePerson(selected));
+        } else {
+            Alerts.showAlert("Selecione uma pessoa", null,
+                    "É preciso selecionar uma pessoa para editar!", AlertType.WARNING);
         }
     }
 
