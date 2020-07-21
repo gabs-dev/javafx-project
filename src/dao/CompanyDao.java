@@ -22,8 +22,8 @@ public class CompanyDao implements IDao<Company> {
     @Override
     public void add(Company obj) {
         PreparedStatement st = null;
-        String sql = "INSERT INTO company (name, email, cnpj) " +
-                "VALUES (?, ?, ?);";
+        String sql = "INSERT INTO company (name, email, cnpj, photo) " +
+                "VALUES (?, ?, ?, ?);";
 
         try {
             conn.setAutoCommit(false);
@@ -32,6 +32,7 @@ public class CompanyDao implements IDao<Company> {
             st.setString(1, obj.getName());
             st.setString(2, obj.getEmail());
             st.setString(3, obj.getCnpj());
+            st.setString(4, obj.getPhoto());
             st.execute();
 
             conn.commit();
@@ -54,7 +55,7 @@ public class CompanyDao implements IDao<Company> {
     public void update(Company obj) {
         PreparedStatement st = null;
         String sql = "UPDATE company " +
-                "SET name = ?, email = ?, cnpj = ? " +
+                "SET name = ?, email = ?, cnpj = ?, photo = ? " +
                 "WHERE id = ?;";
 
         try {
@@ -64,7 +65,8 @@ public class CompanyDao implements IDao<Company> {
             st.setString(1, obj.getName());
             st.setString(2, obj.getEmail());
             st.setString(3, obj.getCnpj());
-            st.setLong(4, obj.getId());
+            st.setString(4, obj.getPhoto());
+            st.setLong(5, obj.getId());
             st.execute();
 
             conn.commit();
@@ -143,6 +145,7 @@ public class CompanyDao implements IDao<Company> {
         obj.setName(rs.getString("name"));
         obj.setEmail(rs.getString("email"));
         obj.setCnpj(rs.getString("cnpj"));
+        obj.setPhoto(rs.getString("photo"));
         return obj;
     }
 

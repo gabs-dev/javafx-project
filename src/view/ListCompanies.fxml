@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -25,5 +26,10 @@
       <Button fx:id="btnDelete" layoutX="551.0" layoutY="53.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Deletar" />
       <Button fx:id="btnUpdate" layoutX="551.0" layoutY="93.0" mnemonicParsing="false" text="Atualizar" />
       <Button fx:id="btnGoBack" layoutX="551.0" layoutY="131.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="← Voltar" />
+      <ImageView fx:id="imgPhoto" fitHeight="116.0" fitWidth="136.0" layoutX="18.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblID" layoutX="170.0" layoutY="423.0" />
+      <Label fx:id="lblName" layoutX="170.0" layoutY="445.0" />
+      <Label fx:id="lblEmail" layoutX="170.0" layoutY="467.0" />
+      <Label fx:id="lblCNPJ" layoutX="170.0" layoutY="489.0" />
    </children>
 </AnchorPane>

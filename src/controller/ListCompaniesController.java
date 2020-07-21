@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import jdbc.exception.DbException;
 import model.Company;
@@ -48,6 +50,21 @@ public class ListCompaniesController implements Initializable {
     @FXML
     private Button btnGoBack;
 
+    @FXML
+    private ImageView imgPhoto;
+
+    @FXML
+    private Label lblID;
+
+    @FXML
+    private Label lblName;
+
+    @FXML
+    private Label lblEmail;
+
+    @FXML
+    private Label lblCNPJ;
+
     private Company selected;
 
     @Override
@@ -71,6 +88,7 @@ public class ListCompaniesController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Company> observableValue, Company oldValue, Company newValue) {
                 selected = newValue;
+                showDetails();
             }
         });
     }
@@ -115,6 +133,22 @@ public class ListCompaniesController implements Initializable {
         } else {
             Alerts.showAlert("Selecione uma empresa", null,
                     "É preciso selecionar uma empresa para excluir!", AlertType.WARNING);
+        }
+    }
+
+    private void showDetails() {
+        if(selected != null) {
+            imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
+            lblID.setText("ID: " + selected.getId());
+            lblName.setText("Name: " + selected.getName());
+            lblEmail.setText("Email: " + selected.getEmail());
+            lblCNPJ.setText("CNPJ: " + selected.getCnpj());
+        } else {
+            imgPhoto.setImage(new Image("file:///"));
+            lblID.setText("");
+            lblName.setText("");
+            lblEmail.setText("");
+            lblCNPJ.setText("");
         }
     }
 

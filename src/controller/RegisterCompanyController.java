@@ -1,21 +1,25 @@
 package controller;
 
+import application.Principal;
+import application.RegisterCompany;
+import application.RegisterPerson;
 import dao.CompanyDao;
-import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import jdbc.exception.DbException;
 import model.Company;
-import application.Principal;
-import application.RegisterCompany;
 import util.Alerts;
 import util.CpfCnpjValidator;
+import util.ManageFiles;
+import util.Navigation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,16 +41,23 @@ public class RegisterCompanyController implements Initializable {
     @FXML
     private Button btnRegister;
 
+    @FXML
+    private ImageView imgPhoto;
+
+    private String photoPath;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         btnCancel.setOnMouseClicked((MouseEvent e) -> {
-            openPrincipal();
+            Navigation.close(RegisterPerson.getStage());
+            Navigation.openScreen(new Principal());
         });
 
         btnCancel.setOnKeyPressed((KeyEvent e) -> {
             if(e.getCode() == KeyCode.ENTER) {
-                openPrincipal();
+                Navigation.close(RegisterPerson.getStage());
+                Navigation.openScreen(new Principal());
             }
         });
 
@@ -60,6 +71,11 @@ public class RegisterCompanyController implements Initializable {
             }
         });
 
+        imgPhoto.setOnMouseClicked((MouseEvent e) -> {
+            photoPath = ManageFiles.selectPhoto();
+            imgPhoto.setImage(new Image("file:///" + photoPath));
+        });
+
     }
 
     private void registerCompany() {
@@ -68,13 +84,13 @@ public class RegisterCompanyController implements Initializable {
                 cnpj = txtCnpj.getText();
 
         if (CpfCnpjValidator.isCnpj(cnpj)) {
-            Company c = new Company(name, email, cnpj);
+            Company c = new Company(name, email, cnpj, photoPath);
             CompanyDao dao = new CompanyDao();
             try {
                 dao.add(c);
-                openPrincipal();
+                Navigation.openScreen(new Principal());
                 Alerts.showAlert("Sucesso", null, "Empresa cadastrada com sucesso", AlertType.INFORMATION);
-                close();
+                Navigation.close(RegisterCompany.getStage());
             } catch (DbException e) {
                 String message = "Erro ao cadastrar empresa";
                 message += "\n" + e.getMessage();
@@ -82,20 +98,6 @@ public class RegisterCompanyController implements Initializable {
             }
         } else {
             Alerts.showAlert("Erro", null, "CNPJ inválido", AlertType.ERROR);
-        }
-    }
-
-    public void close() {
-        RegisterCompany.getStage().close();
-    }
-
-    public void openPrincipal() {
-        Principal p = new Principal();
-        close();
-        try {
-            p.start(new Stage());
-        } catch (Exception exception) {
-            exception.printStackTrace();
         }
     }
 

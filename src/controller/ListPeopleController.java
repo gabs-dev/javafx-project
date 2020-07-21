@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import jdbc.exception.DbException;
 import model.Person;
@@ -45,6 +47,18 @@ public class ListPeopleController implements Initializable {
     @FXML
     private Button btnGoBack;
 
+    @FXML
+    private ImageView imgPhoto;
+
+    @FXML
+    private Label lblID;
+
+    @FXML
+    private Label lblName;
+
+    @FXML
+    private Label lblEmail;
+
     private Person selected;
 
     @Override
@@ -68,6 +82,7 @@ public class ListPeopleController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Person> observableValue, Person oldValue, Person newValue) {
                 selected = newValue;
+                showDetails();
             }
         });
     }
@@ -95,8 +110,8 @@ public class ListPeopleController implements Initializable {
         PersonDao dao = new PersonDao();
         if (selected != null) {
             try {
-                Optional<ButtonType> result = Alerts.showConfirmation(
-                        "Confirmação", "Tem certeza que deseja excluir o(a) usuário(a) " + selected.getName() + "?");
+                Optional<ButtonType> result = Alerts.showConfirmation("Confirmação",
+                        "Tem certeza que deseja excluir o(a) usuário(a) " + selected.getName() + "?");
                 if (result.get() == ButtonType.OK) {
                     dao.delete(selected);
                     Alerts.showAlert("Excluído",  null,
@@ -111,6 +126,20 @@ public class ListPeopleController implements Initializable {
         } else {
             Alerts.showAlert("Selecione uma pessoa", null,
                     "É preciso selecionar uma pessoa para excluir!", AlertType.WARNING);
+        }
+    }
+
+    private void showDetails() {
+        if(selected != null) {
+            imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
+            lblID.setText("ID: " + selected.getId());
+            lblName.setText("Nome: " + selected.getName());
+            lblEmail.setText("Email: " + selected.getEmail());
+        } else {
+            imgPhoto.setImage(new Image("file:///"));
+            lblID.setText("");
+            lblName.setText("");
+            lblEmail.setText("");
         }
     }
 

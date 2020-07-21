@@ -1,5 +1,7 @@
 package controller;
 
+import application.Principal;
+import application.RegisterPerson;
 import dao.PersonDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,15 +9,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import jdbc.exception.DbException;
 import model.Person;
-import application.Principal;
-import application.RegisterPerson;
 import util.Alerts;
+import util.ManageFiles;
+import util.Navigation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,16 +43,23 @@ public class RegisterPersonController implements Initializable {
     @FXML
     private Button btnRegister;
 
+    @FXML
+    private ImageView imgPhoto;
+
+    private String photoPath;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         btnCancel.setOnMouseClicked((MouseEvent e) -> {
-            openPrincipal();
+            Navigation.close(RegisterPerson.getStage());
+            Navigation.openScreen(new Principal());
         });
 
         btnCancel.setOnKeyPressed((KeyEvent e) -> {
             if(e.getCode() == KeyCode.ENTER) {
-                openPrincipal();
+                Navigation.close(RegisterPerson.getStage());
+                Navigation.openScreen(new Principal());
             }
         });
 
@@ -63,6 +73,11 @@ public class RegisterPersonController implements Initializable {
             }
         });
 
+        imgPhoto.setOnMouseClicked((MouseEvent e) -> {
+            photoPath = ManageFiles.selectPhoto();
+            imgPhoto.setImage(new Image("file:///" + photoPath));
+        });
+
     }
 
     private void registerPerson() {
@@ -72,13 +87,13 @@ public class RegisterPersonController implements Initializable {
                 confPassword = psfConfirmPassword.getText();
 
         if(password.equals(confPassword)) {
-            Person p = new Person(name, email, password );
+            Person p = new Person(name, email, password, photoPath);
             PersonDao dao = new PersonDao();
             try {
                 dao.add(p);
-                openPrincipal();
+                Navigation.openScreen(new Principal());
                 Alerts.showAlert("Sucesso", null, "Usuário cadastrado com sucesso", AlertType.INFORMATION);
-                close();
+                Navigation.close(RegisterPerson.getStage());
             } catch (DbException e) {
                 String message = "Erro ao cadastrar usuário";
                 message += "\n" + e.getMessage();
@@ -86,20 +101,6 @@ public class RegisterPersonController implements Initializable {
             }
         } else {
             Alerts.showAlert("Erro", null, "As senhas não coincidem!", AlertType.ERROR);
-        }
-    }
-
-    public void close() {
-        RegisterPerson.getStage().close();
-    }
-
-    public void openPrincipal() {
-        Principal p = new Principal();
-        close();
-        try {
-            p.start(new Stage());
-        } catch (Exception exception) {
-            exception.printStackTrace();
         }
     }
 

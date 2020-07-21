@@ -4,10 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="292.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterPersonController">
+<AnchorPane prefHeight="410.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterPersonController">
    <children>
       <Label layoutX="73.0" layoutY="14.0" text="Cadastrar Pessoa">
          <font>
@@ -18,7 +20,12 @@
       <TextField fx:id="txtEmail" layoutX="14.0" layoutY="118.0" prefHeight="26.0" prefWidth="244.0" promptText="Email" />
       <PasswordField fx:id="psfPassword" layoutX="14.0" layoutY="159.0" prefHeight="26.0" prefWidth="244.0" promptText="Senha" />
       <PasswordField fx:id="psfConfirmPassword" layoutX="14.0" layoutY="197.0" prefHeight="26.0" prefWidth="244.0" promptText="Confirme a senha" />
-      <Button fx:id="btnCancel" layoutX="182.0" layoutY="252.0" mnemonicParsing="false" text="Cancelar" />
-      <Button fx:id="btnRegister" layoutX="266.0" layoutY="252.0" mnemonicParsing="false" text="Cadastrar" />
+      <Button fx:id="btnCancel" layoutX="182.0" layoutY="370.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="btnRegister" layoutX="266.0" layoutY="370.0" mnemonicParsing="false" text="Cadastrar" />
+      <ImageView fx:id="imgPhoto" fitHeight="114.0" fitWidth="110.0" layoutX="14.0" layoutY="235.0" pickOnBounds="true">
+         <image>
+            <Image url="@../resources/image/sytem/sem-foto.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

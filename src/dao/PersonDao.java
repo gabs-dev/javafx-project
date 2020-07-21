@@ -22,8 +22,8 @@ public class PersonDao implements IDao<Person> {
     @Override
     public void add(Person obj) {
         PreparedStatement st = null;
-        String sql = "INSERT INTO person (name, email, password) " +
-                "VALUES (?, ?, ?);";
+        String sql = "INSERT INTO person (name, email, password, photo) " +
+                "VALUES (?, ?, ?, ?);";
 
         try {
             conn.setAutoCommit(false);
@@ -32,6 +32,7 @@ public class PersonDao implements IDao<Person> {
             st.setString(1, obj.getName());
             st.setString(2, obj.getEmail());
             st.setString(3, obj.getPassword());
+            st.setString(4, obj.getPhoto());
             st.execute();
 
             conn.commit();
@@ -54,7 +55,7 @@ public class PersonDao implements IDao<Person> {
     public void update(Person obj) {
         PreparedStatement st = null;
         String sql = "UPDATE person " +
-                "SET name = ?, email = ?, password = ? " +
+                "SET name = ?, email = ?, password = ?, photo = ? " +
                 "WHERE id = ?;";
 
         try {
@@ -64,7 +65,8 @@ public class PersonDao implements IDao<Person> {
             st.setString(1, obj.getName());
             st.setString(2, obj.getEmail());
             st.setString(3, obj.getPassword());
-            st.setLong(4, obj.getId());
+            st.setString(4, obj.getPhoto());
+            st.setLong(5, obj.getId());
             st.execute();
 
             conn.commit();
@@ -168,6 +170,7 @@ public class PersonDao implements IDao<Person> {
         obj.setName(rs.getString("name"));
         obj.setEmail(rs.getString("email"));
         obj.setPassword(rs.getString("password"));
+        obj.setPhoto(rs.getString("photo"));
         return obj;
     }
 

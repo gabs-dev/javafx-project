@@ -6,22 +6,25 @@ public class Company {
     private String name;
     private String email;
     private String cnpj;
+    private String photo;
 
     public Company() {
 
     }
 
-    public Company(String name, String email, String cnpj) {
+    public Company(String name, String email, String cnpj, String photo) {
         this.name = name;
         this.email = email;
         this.cnpj = cnpj;
+        this.photo = photo;
     }
 
-    public Company(Long id, String name, String email, String cnpj) {
+    public Company(Long id, String name, String email, String cnpj, String photo) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cnpj = cnpj;
+        this.photo = photo;
     }
 
     public Long getId() {
@@ -54,6 +57,14 @@ public class Company {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override
