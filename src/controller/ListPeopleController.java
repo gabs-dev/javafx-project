@@ -25,6 +25,7 @@ import model.Person;
 import application.ListPeople;
 import application.Principal;
 import util.Alerts;
+import util.ManageFiles;
 import util.Navigation;
 
 import java.io.FileNotFoundException;
@@ -165,7 +166,8 @@ public class ListPeopleController implements Initializable {
     private void generatePDF() {
         Document doc = new Document();
         try {
-            PdfWriter.getInstance(doc, new FileOutputStream("/home/gabriel/Documentos/people.pdf"));
+            String folderPath = ManageFiles.chooseFolder();
+            PdfWriter.getInstance(doc, new FileOutputStream(folderPath));
             doc.open();
             List<Person> list = new PersonDao().findAll();
             for(Person p : list) {
@@ -181,6 +183,9 @@ public class ListPeopleController implements Initializable {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            Alerts.showAlert("Erro", null,
+                    "É necessário escolher uma pasta para salvar o arquivo", AlertType.WARNING);
         }
     }
 

@@ -18,4 +18,15 @@ public class ManageFiles {
         return photoPath;
     }
 
+    public static String chooseFolder() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            return file.getAbsolutePath();
+        } else {
+            throw new NullPointerException();
+        }
+    }
+
 }
