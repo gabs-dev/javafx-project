@@ -27,6 +27,6 @@
                 <Image url="@../resources/image/sytem/sem-foto.png" />
             </image>
         </ImageView>
-      <TextField fx:id="txtID" editable="false" layoutX="14.0" layoutY="63.0" prefHeight="26.0" prefWidth="48.0" />
+      <TextField fx:id="txtID" disable="true" editable="false" layoutX="14.0" layoutY="63.0" prefHeight="26.0" prefWidth="48.0" />
     </children>
 </AnchorPane>

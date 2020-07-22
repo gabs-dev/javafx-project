@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="546.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListCompaniesController">
+<AnchorPane prefHeight="546.0" prefWidth="671.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListCompaniesController">
    <children>
       <TableView fx:id="table" layoutX="18.0" layoutY="53.0" prefHeight="332.0" prefWidth="510.0">
         <columns>
@@ -18,14 +18,15 @@
             <TableColumn fx:id="clmCNPJ" prefWidth="157.0" text="CNPJ" />
         </columns>
       </TableView>
-      <Label layoutX="227.0" layoutY="14.0" text="Lista de Empresas">
+      <Label layoutX="233.0" layoutY="14.0" text="Lista de Empresas">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnDelete" layoutX="551.0" layoutY="53.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Deletar" />
-      <Button fx:id="btnUpdate" layoutX="551.0" layoutY="93.0" mnemonicParsing="false" text="Atualizar" />
-      <Button fx:id="btnGoBack" layoutX="551.0" layoutY="131.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="← Voltar" />
+      <Button fx:id="btnDelete" layoutX="560.0" layoutY="53.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Deletar" />
+      <Button fx:id="btnEdit" layoutX="560.0" layoutY="91.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Editar" />
+      <Button fx:id="btnUpdate" layoutX="543.0" layoutY="131.0" mnemonicParsing="false" text="Atualizar Lista" />
+      <Button fx:id="btnGoBack" layoutX="560.0" layoutY="168.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="← Voltar" />
       <ImageView fx:id="imgPhoto" fitHeight="116.0" fitWidth="136.0" layoutX="18.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="lblID" layoutX="170.0" layoutY="423.0" />
       <Label fx:id="lblName" layoutX="170.0" layoutY="445.0" />

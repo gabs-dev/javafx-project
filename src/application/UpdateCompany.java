@@ -1,24 +1,24 @@
 package application;
 
-import controller.UpdatePersonController;
+import controller.UpdateCompanyController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Person;
+import model.Company;
 
-public class UpdatePerson extends Application {
+public class UpdateCompany extends Application {
 
     private static Stage stage;
 
-    public UpdatePerson(Person p) {
-        UpdatePersonController.setPerson(p);
+    public UpdateCompany(Company c) {
+        UpdateCompanyController.setCompany(c);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/UpdatePerson.fxml")); // carrega fxml
+        Parent root = FXMLLoader.load(getClass().getResource("/view/UpdateCompany.fxml")); // carrega fxml
         Scene scene = new Scene(root); // coloca o fxml em uma cena
         scene.getStylesheets().add("/resources/css/style.css");
         stage.setTitle("Alterar dados");
@@ -33,7 +33,7 @@ public class UpdatePerson extends Application {
     }
 
     public static void setStage(Stage stage) {
-        UpdatePerson.stage = stage;
+        UpdateCompany.stage = stage;
     }
 
     public static void main(String[] args) {

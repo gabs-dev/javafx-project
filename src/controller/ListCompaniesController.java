@@ -2,6 +2,7 @@ package controller;
 
 import application.ListCompanies;
 import application.Principal;
+import application.UpdateCompany;
 import dao.CompanyDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,6 +46,9 @@ public class ListCompaniesController implements Initializable {
     private Button btnDelete;
 
     @FXML
+    private Button btnEdit;
+
+    @FXML
     private Button btnUpdate;
 
     @FXML
@@ -82,6 +86,10 @@ public class ListCompaniesController implements Initializable {
 
         btnUpdate.setOnMouseClicked((MouseEvent e) -> {
             table.setItems(updateTable());
+        });
+
+        btnEdit.setOnMouseClicked((MouseEvent e) -> {
+            edit();
         });
 
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Company>() {
@@ -133,6 +141,15 @@ public class ListCompaniesController implements Initializable {
         } else {
             Alerts.showAlert("Selecione uma empresa", null,
                     "É preciso selecionar uma empresa para excluir!", AlertType.WARNING);
+        }
+    }
+
+    private void edit() {
+        if(selected != null) {
+            Navigation.openScreen(new UpdateCompany(selected));
+        } else {
+            Alerts.showAlert("Selecione uma empresa", null,
+                    "É preciso selecionar uma empresa para editar!", AlertType.WARNING);
         }
     }
 
