@@ -1,6 +1,11 @@
 package controller;
 
 import application.UpdatePerson;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import dao.CompanyDao;
 import dao.PersonDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,13 +20,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import jdbc.exception.DbException;
+import model.Company;
 import model.Person;
 import application.ListPeople;
 import application.Principal;
 import util.Alerts;
 import util.Navigation;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -44,6 +53,9 @@ public class ListPeopleController implements Initializable {
 
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private Button btnGeneratePDF;
 
     @FXML
     private Button btnGoBack;
@@ -84,6 +96,10 @@ public class ListPeopleController implements Initializable {
 
         btnEdit.setOnMouseClicked((MouseEvent e) -> {
             edit();
+        });
+
+        btnGeneratePDF.setOnMouseClicked((MouseEvent e) -> {
+            generatePDF();
         });
 
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
@@ -143,6 +159,28 @@ public class ListPeopleController implements Initializable {
         } else {
             Alerts.showAlert("Selecione uma pessoa", null,
                     "É preciso selecionar uma pessoa para editar!", AlertType.WARNING);
+        }
+    }
+
+    private void generatePDF() {
+        Document doc = new Document();
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream("/home/gabriel/Documentos/people.pdf"));
+            doc.open();
+            List<Person> list = new PersonDao().findAll();
+            for(Person p : list) {
+                doc.add(new Paragraph("ID: " + p.getId()));
+                doc.add(new Paragraph("Nome: " + p.getName()));
+                doc.add(new Paragraph("Email: " + p.getEmail()));
+                doc.add(new Paragraph("Caminho da foto: " + p.getPhoto()));
+                doc.add(new Paragraph("                          "));
+            }
+            doc.close();
+            Alerts.showAlert("PDF gerado", null, "PDF gerado com sucesso!", AlertType.INFORMATION);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

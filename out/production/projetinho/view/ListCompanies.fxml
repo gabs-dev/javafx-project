@@ -25,8 +25,9 @@
       </Label>
       <Button fx:id="btnDelete" layoutX="560.0" layoutY="53.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Deletar" />
       <Button fx:id="btnEdit" layoutX="560.0" layoutY="91.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Editar" />
-      <Button fx:id="btnUpdate" layoutX="543.0" layoutY="131.0" mnemonicParsing="false" text="Atualizar Lista" />
-      <Button fx:id="btnGoBack" layoutX="560.0" layoutY="168.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="← Voltar" />
+      <Button fx:id="btnUpdate" layoutX="543.0" layoutY="129.0" mnemonicParsing="false" text="Atualizar Lista" />
+      <Button fx:id="btnGeneratePDF" layoutX="556.0" layoutY="165.0" mnemonicParsing="false" text="Gerar PDF" />
+      <Button fx:id="btnGoBack" layoutX="560.0" layoutY="200.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="← Voltar" />
       <ImageView fx:id="imgPhoto" fitHeight="116.0" fitWidth="136.0" layoutX="18.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="lblID" layoutX="170.0" layoutY="423.0" />
       <Label fx:id="lblName" layoutX="170.0" layoutY="445.0" />

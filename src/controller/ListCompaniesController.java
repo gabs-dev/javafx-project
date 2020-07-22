@@ -3,6 +3,10 @@ package controller;
 import application.ListCompanies;
 import application.Principal;
 import application.UpdateCompany;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import dao.CompanyDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,7 +25,10 @@ import model.Company;
 import util.Alerts;
 import util.Navigation;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -50,6 +57,9 @@ public class ListCompaniesController implements Initializable {
 
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private Button btnGeneratePDF;
 
     @FXML
     private Button btnGoBack;
@@ -90,6 +100,10 @@ public class ListCompaniesController implements Initializable {
 
         btnEdit.setOnMouseClicked((MouseEvent e) -> {
             edit();
+        });
+
+        btnGeneratePDF.setOnMouseClicked((MouseEvent e) -> {
+            generatePDF();
         });
 
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Company>() {
@@ -153,11 +167,34 @@ public class ListCompaniesController implements Initializable {
         }
     }
 
+    private void generatePDF() {
+        Document doc = new Document();
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream("/home/gabriel/Documentos/companies.pdf"));
+            doc.open();
+            List<Company> list = new CompanyDao().findAll();
+            for(Company c : list) {
+                doc.add(new Paragraph("ID: " + c.getId()));
+                doc.add(new Paragraph("Nome: " + c.getName()));
+                doc.add(new Paragraph("Email: " + c.getEmail()));
+                doc.add(new Paragraph("CNPJ: " + c.getCnpj()));
+                doc.add(new Paragraph("Caminho da foto: " + c.getPhoto()));
+                doc.add(new Paragraph("                     "));
+            }
+            doc.close();
+            Alerts.showAlert("PDF gerado", null, "PDF gerado com sucesso!", AlertType.INFORMATION);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showDetails() {
         if(selected != null) {
             imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
             lblID.setText("ID: " + selected.getId());
-            lblName.setText("Name: " + selected.getName());
+            lblName.setText("Nome: " + selected.getName());
             lblEmail.setText("Email: " + selected.getEmail());
             lblCNPJ.setText("CNPJ: " + selected.getCnpj());
         } else {
