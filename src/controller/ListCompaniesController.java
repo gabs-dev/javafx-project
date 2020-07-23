@@ -19,6 +19,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import jdbc.exception.DbException;
 import model.Company;
@@ -34,6 +35,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ListCompaniesController implements Initializable {
+
+    @FXML
+    private TextField txtSearch;
+
+    @FXML
+    private Button btnSearch;
 
     @FXML
     private TableView<Company> table;
@@ -82,6 +89,8 @@ public class ListCompaniesController implements Initializable {
 
     private Company selected;
 
+    private ObservableList<Company> companies = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
@@ -107,6 +116,14 @@ public class ListCompaniesController implements Initializable {
             generatePDF();
         });
 
+        btnSearch.setOnMouseClicked((MouseEvent e) -> {
+            table.setItems(search());
+        });
+
+        txtSearch.setOnKeyReleased((KeyEvent e) -> {
+            table.setItems(search());
+        });
+
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Company>() {
             @Override
             public void changed(ObservableValue<? extends Company> observableValue, Company oldValue, Company newValue) {
@@ -127,7 +144,8 @@ public class ListCompaniesController implements Initializable {
     private ObservableList<Company> updateTable() {
         CompanyDao dao = new CompanyDao();
         try {
-            return FXCollections.observableArrayList(dao.findAll());
+            companies = FXCollections.observableArrayList(dao.findAll());
+            return companies;
         } catch (DbException e) {
             Alerts.showAlert("Erro", "",
                     "Erro ao exibir a lista de empresas!\n" + e.getMessage(), AlertType.ERROR);
@@ -195,8 +213,18 @@ public class ListCompaniesController implements Initializable {
         }
     }
 
+    private ObservableList<Company> search() {
+        ObservableList<Company> searchResult = FXCollections.observableArrayList();
+        for (Company c : companies) {
+            if (c.getName().toLowerCase().contains(txtSearch.getText().toLowerCase())) {
+                searchResult.add(c);
+            }
+        }
+        return searchResult;
+    }
+
     private void showDetails() {
-        if(selected != null) {
+        if (selected != null) {
             imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
             lblID.setText("ID: " + selected.getId());
             lblName.setText("Nome: " + selected.getName());

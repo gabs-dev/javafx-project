@@ -1,11 +1,12 @@
 package controller;
 
+import application.ListPeople;
+import application.Principal;
 import application.UpdatePerson;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import dao.CompanyDao;
 import dao.PersonDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,17 +14,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import jdbc.exception.DbException;
-import model.Company;
 import model.Person;
-import application.ListPeople;
-import application.Principal;
 import util.Alerts;
 import util.ManageFiles;
 import util.Navigation;
@@ -36,6 +35,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ListPeopleController implements Initializable {
+
+    @FXML
+    private TextField txtSearch;
+
+    @FXML
+    private Button btnSearch;
 
     @FXML
     private TableView<Person> table;
@@ -78,6 +83,8 @@ public class ListPeopleController implements Initializable {
 
     private Person selected;
 
+    private ObservableList<Person> people = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
@@ -103,6 +110,14 @@ public class ListPeopleController implements Initializable {
             generatePDF();
         });
 
+        btnSearch.setOnMouseClicked((MouseEvent e) -> {
+            table.setItems(search());
+        });
+
+        txtSearch.setOnKeyReleased((KeyEvent e) -> {
+            table.setItems(search());
+        });
+
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
             @Override
             public void changed(ObservableValue<? extends Person> observableValue, Person oldValue, Person newValue) {
@@ -122,7 +137,8 @@ public class ListPeopleController implements Initializable {
     private ObservableList<Person> updateTable() {
         PersonDao dao = new PersonDao();
         try {
-            return FXCollections.observableArrayList(dao.findAll());
+            people = FXCollections.observableArrayList(dao.findAll());
+            return people;
         } catch (DbException e) {
             Alerts.showAlert("Erro", "",
                     "Erro ao exibir a lista de pessoas!\n" + e.getMessage(), AlertType.ERROR);
@@ -187,6 +203,16 @@ public class ListPeopleController implements Initializable {
             Alerts.showAlert("Erro", null,
                     "É necessário escolher uma pasta para salvar o arquivo", AlertType.WARNING);
         }
+    }
+
+    private ObservableList<Person> search() {
+        ObservableList<Person> searchResult = FXCollections.observableArrayList();
+        for (Person p : people) {
+            if (p.getName().toLowerCase().contains(txtSearch.getText().toLowerCase())) {
+                searchResult.add(p);
+            }
+        }
+        return searchResult;
     }
 
     private void showDetails() {
