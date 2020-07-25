@@ -1,22 +1,28 @@
 package controller;
 
+import application.Credits;
+import application.Login;
+import application.Principal;
 import dao.PersonDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import model.Person;
-import application.Login;
-import application.Principal;
 import util.Alerts;
+import util.Navigation;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -31,28 +37,39 @@ public class LoginController implements Initializable {
     private Button btnLogin;
 
     @FXML
-    private Button btnExit;
+    private Circle userPhoto;
+
+    @FXML
+    private Button btnCredits;
+
+    @FXML
+    private Label lblForgetPassword;
+
+    private PersonDao dao;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        userPhoto.setFill(new ImagePattern(new Image("/resources/image/system/icon-photo.png")));
+
+        dao = new PersonDao();
+        List<Person> list = dao.findAll();
 
         btnLogin.setOnMouseClicked((MouseEvent e) -> {
             login();
         });
 
-        btnLogin.setOnKeyPressed((KeyEvent e) -> {
-            if(e.getCode() == KeyCode.ENTER) {
-                login();
+        txtUser.setOnKeyReleased((KeyEvent e) -> {
+            Person p = getUser(list);
+            if (p != null) {
+                userPhoto.setFill(new ImagePattern(new Image("file:///" + p.getPhoto())));
+            } else {
+                userPhoto.setFill(new ImagePattern(new Image("/resources/image/system/icon-photo.png")));
             }
         });
 
-        btnExit.setOnMouseClicked((MouseEvent e) -> {
-            close();
-        });
-
-        btnExit.setOnKeyPressed((KeyEvent e) -> {
+        btnLogin.setOnKeyPressed((KeyEvent e) -> {
             if(e.getCode() == KeyCode.ENTER) {
-                close();
+                login();
             }
         });
 
@@ -62,31 +79,39 @@ public class LoginController implements Initializable {
             }
         });
 
+        btnCredits.setOnMouseClicked((MouseEvent e) -> {
+            openCredits();
+        });
+
     }
 
-    private void close() {
-        Login.getStage().close();
+    private void openCredits() {
+        Navigation.openScreen(new Credits());
     }
 
     private void login() {
-        PersonDao dao = new PersonDao();
+        dao = new PersonDao();
         Person p;
         if (!(txtUser.getText().equals("")) && !(txtPassword.getText().equals(""))) {
             p = dao.findByEmail(txtUser.getText());
             if (p != null && p.getPassword().equals(txtPassword.getText())) {
-                Principal principal = new Principal();
-                close();
-                try {
-                    principal.start(new Stage());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Navigation.openScreen(new Principal());
+                Navigation.close(Login.getStage());
             } else {
                 Alerts.showAlert("Erro", null, "Usuário ou senha inválido(s)", AlertType.ERROR);
             }
         } else {
             Alerts.showAlert("Erro", null, "Preecha o(s) campo(s) de email e/ou senha", AlertType.ERROR);
         }
+    }
+
+    private Person getUser(List<Person> list) {
+        for(Person p : list) {
+            if (p.getEmail().equals(txtUser.getText())) {
+                return p;
+            }
+        }
+        return null;
     }
 
 }

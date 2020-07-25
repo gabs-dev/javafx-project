@@ -4,26 +4,61 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.image.Image?>
-<AnchorPane prefHeight="380.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane fx:id="anchorMain" prefHeight="590.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <TextField fx:id="txtUser" layoutX="132.0" layoutY="208.0" promptText="Email" />
-      <PasswordField fx:id="txtPassword" layoutX="132.0" layoutY="248.0" promptText="Senha" />
-      <Button fx:id="btnLogin" layoutX="132.0" layoutY="299.0" mnemonicParsing="false" text="Entrar" />
-      <Button fx:id="btnExit" layoutX="245.0" layoutY="299.0" mnemonicParsing="false" prefWidth="59.0" text="Sair" />
-      <Label fx:id="lblTitle" layoutX="154.0" layoutY="160.0" text="Projetinho">
+      <TextField fx:id="txtUser" layoutX="84.0" layoutY="252.0" prefHeight="26.0" prefWidth="223.0" promptText="Email" />
+      <PasswordField fx:id="txtPassword" layoutX="84.0" layoutY="289.0" prefHeight="26.0" prefWidth="223.0" promptText="Senha" />
+      <Button fx:id="btnLogin" layoutX="84.0" layoutY="325.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="223.0" text="LOGIN" />
+      <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true">
+         <image>
+            <Image url="@../resources/image/system/icon_company.png" />
+         </image></ImageView>
+      <AnchorPane fx:id="anchorP" layoutX="405.0" prefHeight="594.0" prefWidth="575.0">
+         <children>
+            <Label layoutX="109.0" layoutY="237.0" text="Bem-vindo a" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="310.0" layoutY="237.0" text="Company" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="109.0" layoutY="281.0" text="Faça o Login para acessar a sua conta" textFill="WHITE" />
+            <Label layoutX="199.0" layoutY="561.0" text="© Gabriel Felipe - 2020" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label fx:id="lblCompany" layoutX="84.0" layoutY="38.0" text="Company" textFill="#8929ad">
          <font>
-            <Font name="System Regular" size="25.0" />
+            <Font name="DejaVu Sans Condensed Bold" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="95.0" fitWidth="95.0" layoutX="170.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="/resources/image/java-icon.png" backgroundLoading="true"/>
-         </image>
-      </ImageView>
+      <Circle fx:id="userPhoto" disable="true" fill="DODGERBLUE" layoutX="196.0" layoutY="192.0" radius="50.0" stroke="#f7f2f200" strokeType="INSIDE" />
+      <Button fx:id="btnCredits" layoutX="156.0" layoutY="561.0" mnemonicParsing="false" text="Créditos" textFill="#43b7b8">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="138.0" layoutY="360.0" text="Esqueceu a senha?">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblForgetPassword" layoutX="162.0" layoutY="382.0" text="Clique aqui">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -24,7 +24,7 @@
         <Button fx:id="btnUpdate" layoutX="267.0" layoutY="396.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Atualizar" />
         <ImageView fx:id="imgPhoto" fitHeight="114.0" fitWidth="110.0" layoutX="14.0" layoutY="261.0" pickOnBounds="true">
             <image>
-                <Image url="@../resources/image/sytem/sem-foto.png" />
+                <Image url="@../resources/image/system/sem-foto.png" />
             </image>
         </ImageView>
       <TextField fx:id="txtID" disable="true" editable="false" layoutX="14.0" layoutY="63.0" prefHeight="26.0" prefWidth="48.0" />

@@ -21,7 +21,7 @@
         <TextField fx:id="txtCnpj" layoutX="14.0" layoutY="200.0" prefHeight="26.0" prefWidth="228.0" promptText="CNPJ" />
         <ImageView fx:id="imgPhoto" fitHeight="104.0" fitWidth="103.0" layoutX="14.0" layoutY="238.0" pickOnBounds="true">
             <image>
-                <Image url="@../resources/image/sytem/sem-foto.png" />
+                <Image url="@../resources/image/system/sem-foto.png" />
             </image>
         </ImageView>
         <Button fx:id="btnCancel" layoutX="236.0" layoutY="372.0" mnemonicParsing="false" text="Cancelar" />

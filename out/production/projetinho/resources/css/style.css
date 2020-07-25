@@ -1,25 +1,59 @@
 #btnLogin {
-    -fx-background-color: #1b5e20;
-    -fx-background-radius: 10;
-    -fx-text-fill: white;
-}
-
-#btnExit {
-    -fx-background-color: #b71c1c;
-    -fx-background-radius: 10;
+    -fx-background-color: #8929AD;
+    -fx-background-radius: 20;
     -fx-text-fill: white;
 }
 
 .text-field {
-    -fx-background-radius: 10;
+    -fx-background-radius: 20;
 }
 
 #mainView {
-    -fx-background-color: linear-gradient(to bottom right, #AAFEFF, #801155);
+    -fx-background-color: linear-gradient(to bottom right, #8929AD, #436AAC, #43B7B8);
 }
 
 .principalButtons {
     -fx-background-color: white;
     -fx-background-radius: 20;
     -fx-text-fill: #0277bd;
+}
+
+#anchorMain {
+    -fx-background-color: white;
+}
+
+#anchorP {
+    -fx-background-color: linear-gradient(to bottom right, #8929AD, #436AAC, #43B7B8);
+}
+
+#lblCompany {
+    -fx-text-fill: linear-gradient(to left, #8929AD, #436AAC, #43B7B8);
+}
+
+#lblForgetPassword {
+    -fx-text-fill: #8929AD;
+}
+
+#btnCredits {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+#txtaCredits {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+#btnOkay {
+    -fx-background-color: #8929AD;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+
+.dialog-pane > .content.label {
+    -fx-background-color: white;
 }

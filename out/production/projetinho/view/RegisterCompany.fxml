@@ -22,7 +22,7 @@
       <Button fx:id="btnRegister" layoutX="320.0" layoutY="326.0" mnemonicParsing="false" text="Cadastrar" />
       <ImageView fx:id="imgPhoto" fitHeight="104.0" fitWidth="103.0" layoutX="14.0" layoutY="209.0" pickOnBounds="true">
          <image>
-            <Image url="@../resources/image/sytem/sem-foto.png" />
+            <Image url="@../resources/image/system/sem-foto.png" />
          </image>
       </ImageView>
    </children>
