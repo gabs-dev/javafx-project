@@ -6,6 +6,8 @@ import application.UpdatePerson;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import dao.PersonDao;
 import javafx.beans.value.ChangeListener;
@@ -22,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import jdbc.exception.DbException;
+import model.Company;
 import model.Person;
 import util.Alerts;
 import util.ManageFiles;
@@ -38,9 +41,6 @@ public class ListPeopleController implements Initializable {
 
     @FXML
     private TextField txtSearch;
-
-    @FXML
-    private Button btnSearch;
 
     @FXML
     private TableView<Person> table;
@@ -64,9 +64,6 @@ public class ListPeopleController implements Initializable {
     private Button btnGeneratePDF;
 
     @FXML
-    private Button btnGoBack;
-
-    @FXML
     private ImageView imgPhoto;
 
     @FXML
@@ -85,14 +82,11 @@ public class ListPeopleController implements Initializable {
 
     private ObservableList<Person> people = FXCollections.observableArrayList();
 
+    private String standardPhoto = "/resources/image/system/icon-photo.png";
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
-
-        btnGoBack.setOnMouseClicked((MouseEvent e) -> {
-            Navigation.openScreen(new Principal());
-            Navigation.close(ListPeople.getStage());
-        });
 
         btnDelete.setOnMouseClicked((MouseEvent e) -> {
             delete();
@@ -108,10 +102,6 @@ public class ListPeopleController implements Initializable {
 
         btnGeneratePDF.setOnMouseClicked((MouseEvent e) -> {
             generatePDF();
-        });
-
-        btnSearch.setOnMouseClicked((MouseEvent e) -> {
-            table.setItems(search());
         });
 
         txtSearch.setOnKeyReleased((KeyEvent e) -> {
@@ -186,13 +176,34 @@ public class ListPeopleController implements Initializable {
             PdfWriter.getInstance(doc, new FileOutputStream(folderPath));
             doc.open();
             List<Person> list = new PersonDao().findAll();
+
+            Paragraph paragraph = new Paragraph("Relatório de Pessoas");
+            paragraph.setAlignment(1);
+            doc.add(paragraph);
+            paragraph = new Paragraph("  ");
+            doc.add(paragraph);
+
+            PdfPTable table = new PdfPTable(3);
+
+            PdfPCell cell1 = new PdfPCell(new Paragraph("ID"));
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Nome"));
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Email"));
+
+            table.addCell(cell1);
+            table.addCell(cell2);
+            table.addCell(cell3);
+
             for(Person p : list) {
-                doc.add(new Paragraph("ID: " + p.getId()));
-                doc.add(new Paragraph("Nome: " + p.getName()));
-                doc.add(new Paragraph("Email: " + p.getEmail()));
-                doc.add(new Paragraph("Caminho da foto: " + p.getPhoto()));
-                doc.add(new Paragraph("                          "));
+                cell1 = new PdfPCell(new Paragraph(Long.toString(p.getId())));
+                cell2 = new PdfPCell(new Paragraph(p.getName()));
+                cell3 = new PdfPCell(new Paragraph(p.getEmail()));
+
+                table.addCell(cell1);
+                table.addCell(cell2);
+                table.addCell(cell3);
             }
+
+            doc.add(table);
             doc.close();
             Alerts.showAlert("PDF gerado", null, "PDF gerado com sucesso!", AlertType.INFORMATION);
         } catch (DocumentException e) {
@@ -217,7 +228,11 @@ public class ListPeopleController implements Initializable {
 
     private void showDetails() {
         if(selected != null) {
-            imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
+            if (selected.getPhoto().equals(standardPhoto)) {
+                imgPhoto.setImage(new Image(selected.getPhoto()));
+            } else {
+                imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
+            }
             lblID.setText("ID: " + selected.getId());
             lblName.setText("Nome: " + selected.getName());
             lblEmail.setText("Email: " + selected.getEmail());

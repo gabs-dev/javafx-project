@@ -1,22 +1,23 @@
 package controller;
 
 import application.*;
-import dao.CompanyDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import jdbc.exception.DbException;
-import model.Company;
-import util.Alerts;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import model.Person;
+import util.FxmlLoader;
 import util.Navigation;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class PrincipalController implements Initializable {
@@ -33,8 +34,22 @@ public class PrincipalController implements Initializable {
     @FXML
     private Button btnListCompanies;
 
+    @FXML
+    private Circle userPhoto;
+
+    @FXML
+    private Label lblUserName;
+
+    @FXML
+    private Button btnLogout;
+
+    @FXML
+    private BorderPane mainPane;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        userLoggedIn();
+        openAddPerson();
 
         btnAddCompany.setOnMouseClicked((MouseEvent e) -> {
             openAddCompany();
@@ -76,30 +91,57 @@ public class PrincipalController implements Initializable {
             }
         });
 
+        btnLogout.setOnMouseClicked((MouseEvent e) -> {
+            logout();
+        });
+
     }
 
     private void openAddCompany() {
-        close();
-        Navigation.openScreen(new RegisterCompany());
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("RegisterCompany");
+        mainPane.setCenter(view);
     }
 
     private void openAddPerson() {
-        close();
-        Navigation.openScreen(new RegisterPerson());
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("RegisterPerson");
+        mainPane.setCenter(view);
     }
 
     private void listCompanies() {
-        Navigation.openScreen(new ListCompanies());
-        close();
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("ListCompanies");
+        mainPane.setCenter(view);
     }
 
     private void listPeople() {
-        Navigation.openScreen(new ListPeople());
-        close();
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("ListPeople");
+        mainPane.setCenter(view);
     }
 
     private void close() {
         Navigation.close(Principal.getStage());
+    }
+
+    private void userLoggedIn() {
+        Person p = LoginController.getLogged();
+        if (p != null) {
+            if (p.getPhoto().equals("/resources/image/system/icon-photo.png")) {
+                userPhoto.setFill(new ImagePattern(new Image("/resources/image/system/icon-photo.png")));
+            } else {
+                userPhoto.setFill(new ImagePattern(new Image("file:///" + p.getPhoto())));
+            }
+            //userPhoto.setFill(new ImagePattern(new Image("file:///" + p.getPhoto())));
+            lblUserName.setText(p.getName());
+        }
+    }
+
+    private void logout() {
+        LoginController.setLogged(null);
+        Navigation.close(Principal.getStage());
+        Navigation.openScreen(new Login());
     }
 
 }

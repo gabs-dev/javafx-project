@@ -8,19 +8,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="366.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterCompanyController">
+<AnchorPane prefHeight="505.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterCompanyController">
    <children>
-      <Label layoutX="88.0" layoutY="25.0" text="Cadastrar Empresa">
+      <Label layoutX="253.0" layoutY="14.0" text="Cadastrar Empresa">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtName" layoutX="14.0" layoutY="91.0" prefHeight="26.0" prefWidth="228.0" promptText="Nome" />
-      <TextField fx:id="txtEmail" layoutX="14.0" layoutY="132.0" prefHeight="26.0" prefWidth="228.0" promptText="Email" />
-      <TextField fx:id="txtCnpj" layoutX="14.0" layoutY="171.0" prefHeight="26.0" prefWidth="228.0" promptText="CNPJ" />
-      <Button fx:id="btnCancel" layoutX="233.0" layoutY="326.0" mnemonicParsing="false" text="Cancelar" />
-      <Button fx:id="btnRegister" layoutX="320.0" layoutY="326.0" mnemonicParsing="false" text="Cadastrar" />
-      <ImageView fx:id="imgPhoto" fitHeight="104.0" fitWidth="103.0" layoutX="14.0" layoutY="209.0" pickOnBounds="true">
+      <TextField fx:id="txtName" layoutX="333.0" layoutY="200.0" prefHeight="26.0" prefWidth="228.0" promptText="Nome" />
+      <TextField fx:id="txtEmail" layoutX="333.0" layoutY="241.0" prefHeight="26.0" prefWidth="228.0" promptText="Email" />
+      <TextField fx:id="txtCnpj" layoutX="333.0" layoutY="280.0" prefHeight="26.0" prefWidth="228.0" promptText="CNPJ" />
+      <Button fx:id="btnRegister" layoutX="650.0" layoutY="465.0" mnemonicParsing="false" text="Cadastrar" />
+      <ImageView fx:id="imgPhoto" fitHeight="129.0" fitWidth="130.0" layoutX="186.0" layoutY="188.0" pickOnBounds="true">
          <image>
             <Image url="@../resources/image/system/sem-foto.png" />
          </image>

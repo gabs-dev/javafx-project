@@ -47,6 +47,8 @@ public class UpdateCompanyController implements Initializable {
 
     private String photoPath = "";
 
+    private String standardPhoto = "/resources/image/system/company.png";
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initCompany();
@@ -67,7 +69,11 @@ public class UpdateCompanyController implements Initializable {
 
     private void initCompany() {
         if (company != null) {
-            imgPhoto.setImage(new Image("file:///" + company.getPhoto()));
+            if (company.getPhoto().equals(standardPhoto)) {
+                imgPhoto.setImage(new Image(company.getPhoto()));
+            } else {
+                imgPhoto.setImage(new Image("file:///" + company.getPhoto()));
+            }
             txtID.setText(company.getId().toString());
             txtName.setText(company.getName());
             txtEmail.setText(company.getEmail());

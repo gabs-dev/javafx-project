@@ -9,20 +9,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="410.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterPersonController">
+<AnchorPane prefHeight="505.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterPersonController">
    <children>
-      <Label layoutX="73.0" layoutY="14.0" text="Cadastrar Pessoa">
+      <Label layoutX="264.0" layoutY="14.0" text="Cadastrar Pessoa">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtName" layoutX="14.0" layoutY="77.0" prefHeight="26.0" prefWidth="244.0" promptText="Nome" />
-      <TextField fx:id="txtEmail" layoutX="14.0" layoutY="118.0" prefHeight="26.0" prefWidth="244.0" promptText="Email" />
-      <PasswordField fx:id="psfPassword" layoutX="14.0" layoutY="159.0" prefHeight="26.0" prefWidth="244.0" promptText="Senha" />
-      <PasswordField fx:id="psfConfirmPassword" layoutX="14.0" layoutY="197.0" prefHeight="26.0" prefWidth="244.0" promptText="Confirme a senha" />
-      <Button fx:id="btnCancel" layoutX="182.0" layoutY="370.0" mnemonicParsing="false" text="Cancelar" />
-      <Button fx:id="btnRegister" layoutX="266.0" layoutY="370.0" mnemonicParsing="false" text="Cadastrar" />
-      <ImageView fx:id="imgPhoto" fitHeight="114.0" fitWidth="110.0" layoutX="14.0" layoutY="235.0" pickOnBounds="true">
+      <TextField fx:id="txtName" layoutX="336.0" layoutY="180.0" prefHeight="26.0" prefWidth="244.0" promptText="Nome" />
+      <TextField fx:id="txtEmail" layoutX="336.0" layoutY="221.0" prefHeight="26.0" prefWidth="244.0" promptText="Email" />
+      <PasswordField fx:id="psfPassword" layoutX="336.0" layoutY="262.0" prefHeight="26.0" prefWidth="244.0" promptText="Senha" />
+      <PasswordField fx:id="psfConfirmPassword" layoutX="336.0" layoutY="300.0" prefHeight="26.0" prefWidth="244.0" promptText="Confirme a senha" />
+      <Button fx:id="btnRegister" layoutX="650.0" layoutY="465.0" mnemonicParsing="false" text="Cadastrar" />
+      <ImageView fx:id="imgPhoto" fitHeight="130.0" fitWidth="129.0" layoutX="181.0" layoutY="188.0" pickOnBounds="true">
          <image>
             <Image url="@../resources/image/system/sem-foto.png" />
          </image>

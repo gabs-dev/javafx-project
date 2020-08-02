@@ -6,6 +6,8 @@ import application.UpdateCompany;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import dao.CompanyDao;
 import javafx.beans.value.ChangeListener;
@@ -91,14 +93,11 @@ public class ListCompaniesController implements Initializable {
 
     private ObservableList<Company> companies = FXCollections.observableArrayList();
 
+    private String standardPhoto = "/resources/image/system/company.png";
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
-
-        btnGoBack.setOnMouseClicked((MouseEvent e) -> {
-            Navigation.openScreen(new Principal());
-            Navigation.close(ListCompanies.getStage());
-        });
 
         btnDelete.setOnMouseClicked((MouseEvent e) -> {
             delete();
@@ -114,10 +113,6 @@ public class ListCompaniesController implements Initializable {
 
         btnGeneratePDF.setOnMouseClicked((MouseEvent e) -> {
             generatePDF();
-        });
-
-        btnSearch.setOnMouseClicked((MouseEvent e) -> {
-            table.setItems(search());
         });
 
         txtSearch.setOnKeyReleased((KeyEvent e) -> {
@@ -192,15 +187,39 @@ public class ListCompaniesController implements Initializable {
             String folderPath = ManageFiles.chooseFolder();
             PdfWriter.getInstance(doc, new FileOutputStream(folderPath));
             doc.open();
+
             List<Company> list = new CompanyDao().findAll();
+
+            Paragraph p = new Paragraph("Relatório de Empresas");
+            p.setAlignment(1);
+            doc.add(p);
+            p = new Paragraph("  ");
+            doc.add(p);
+
+            PdfPTable table = new PdfPTable(4);
+
+            PdfPCell cell1 = new PdfPCell(new Paragraph("ID"));
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Nome"));
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Email"));
+            PdfPCell cell4 = new PdfPCell(new Paragraph("CNPJ"));
+
+            table.addCell(cell1);
+            table.addCell(cell2);
+            table.addCell(cell3);
+            table.addCell(cell4);
+
             for(Company c : list) {
-                doc.add(new Paragraph("ID: " + c.getId()));
-                doc.add(new Paragraph("Nome: " + c.getName()));
-                doc.add(new Paragraph("Email: " + c.getEmail()));
-                doc.add(new Paragraph("CNPJ: " + c.getCnpj()));
-                doc.add(new Paragraph("Caminho da foto: " + c.getPhoto()));
-                doc.add(new Paragraph("                     "));
+                cell1 = new PdfPCell(new Paragraph(Long.toString(c.getId())));
+                cell2 = new PdfPCell(new Paragraph(c.getName()));
+                cell3 = new PdfPCell(new Paragraph(c.getEmail()));
+                cell4 = new PdfPCell(new Paragraph(c.getCnpj()));
+
+                table.addCell(cell1);
+                table.addCell(cell2);
+                table.addCell(cell3);
+                table.addCell(cell4);
             }
+            doc.add(table);
             doc.close();
             Alerts.showAlert("PDF gerado", null, "PDF gerado com sucesso!", AlertType.INFORMATION);
         } catch (DocumentException e) {
@@ -225,7 +244,11 @@ public class ListCompaniesController implements Initializable {
 
     private void showDetails() {
         if (selected != null) {
-            imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
+            if (selected.getPhoto().equals(standardPhoto)) {
+                imgPhoto.setImage(new Image(selected.getPhoto()));
+            } else {
+                imgPhoto.setImage(new Image("file:///" + selected.getPhoto()));
+            }
             lblID.setText("ID: " + selected.getId());
             lblName.setText("Nome: " + selected.getName());
             lblEmail.setText("Email: " + selected.getEmail());

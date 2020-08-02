@@ -10,5 +10,8 @@
     <orderEntry type="library" name="JavaFX" level="project" />
     <orderEntry type="library" name="PostgreSQLConnection" level="project" />
     <orderEntry type="library" name="iText-5" level="project" />
+    <orderEntry type="library" name="JavaMail" level="project" />
+    <orderEntry type="library" name="JavaXActivation" level="project" />
+    <orderEntry type="library" name="Activation" level="project" />
   </component>
 </module>

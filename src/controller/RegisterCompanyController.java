@@ -2,7 +2,6 @@ package controller;
 
 import application.Principal;
 import application.RegisterCompany;
-import application.RegisterPerson;
 import dao.CompanyDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,9 +35,6 @@ public class RegisterCompanyController implements Initializable {
     private TextField txtCnpj;
 
     @FXML
-    private Button btnCancel;
-
-    @FXML
     private Button btnRegister;
 
     @FXML
@@ -46,24 +42,13 @@ public class RegisterCompanyController implements Initializable {
 
     private String photoPath;
 
+    private String standardPhoto = "/resources/image/system/company.png";
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        photoPath = standardPhoto;
 
-        btnCancel.setOnMouseClicked((MouseEvent e) -> {
-            Navigation.close(RegisterPerson.getStage());
-            Navigation.openScreen(new Principal());
-        });
-
-        btnCancel.setOnKeyPressed((KeyEvent e) -> {
-            if(e.getCode() == KeyCode.ENTER) {
-                Navigation.close(RegisterPerson.getStage());
-                Navigation.openScreen(new Principal());
-            }
-        });
-
-        btnRegister.setOnMouseClicked((MouseEvent e) -> {
-            registerCompany();
-        });
+        btnRegister.setOnMouseClicked((MouseEvent e) -> registerCompany());
 
         btnRegister.setOnKeyPressed((KeyEvent e) -> {
             if(e.getCode() == KeyCode.ENTER) {
@@ -83,22 +68,33 @@ public class RegisterCompanyController implements Initializable {
                 email = txtEmail.getText(),
                 cnpj = txtCnpj.getText();
 
-        if (CpfCnpjValidator.isCnpj(cnpj)) {
-            Company c = new Company(name, email, cnpj, photoPath);
-            CompanyDao dao = new CompanyDao();
-            try {
-                dao.add(c);
-                Navigation.openScreen(new Principal());
-                Alerts.showAlert("Sucesso", null, "Empresa cadastrada com sucesso", AlertType.INFORMATION);
-                Navigation.close(RegisterCompany.getStage());
-            } catch (DbException e) {
-                String message = "Erro ao cadastrar empresa";
-                message += "\n" + e.getMessage();
-                Alerts.showAlert("Erro", null, message, AlertType.ERROR);
+        if (!(name.equals("")) && !(email.equals("")) && !(cnpj.equals(""))) {
+            if (CpfCnpjValidator.isCnpj(cnpj)) {
+                Company c = new Company(name, email, cnpj, photoPath);
+                CompanyDao dao = new CompanyDao();
+                try {
+                    dao.add(c);
+                    clearFields();
+                    Alerts.showAlert("Sucesso", null, "Empresa cadastrada com sucesso", AlertType.INFORMATION);
+                } catch (DbException e) {
+                    String message = "Erro ao cadastrar empresa";
+                    message += "\n" + e.getMessage();
+                    Alerts.showAlert("Erro", null, message, AlertType.ERROR);
+                }
+            } else {
+                Alerts.showAlert("Erro", null, "CNPJ inválido", AlertType.ERROR);
             }
         } else {
-            Alerts.showAlert("Erro", null, "CNPJ inválido", AlertType.ERROR);
+            Alerts.showAlert("Campos vazios", "",
+                    "É necessário que todos os campos sejam preenchidos!", AlertType.WARNING);
         }
+    }
+
+    private void clearFields() {
+        txtName.setText("");
+        txtEmail.setText("");
+        txtCnpj.setText("");
+        imgPhoto.setImage(new Image("/resources/image/system/sem-foto.png"));
     }
 
 }

@@ -118,7 +118,7 @@ public class CompanyDao implements IDao<Company> {
         PreparedStatement st = null;
         ResultSet rs = null;
         List<Company> list = new ArrayList<>();
-        String sql = "SELECT * FROM company";
+        String sql = "SELECT * FROM company ORDER BY name";
         try {
             st = conn.prepareStatement(sql);
             rs = st.executeQuery();

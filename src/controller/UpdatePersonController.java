@@ -50,6 +50,8 @@ public class UpdatePersonController implements Initializable {
 
     private String photoPath = "";
 
+    private String standardPhoto = "/resources/image/system/icon-photo.png";
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initPerson();
@@ -70,7 +72,11 @@ public class UpdatePersonController implements Initializable {
 
     private void initPerson() {
         if (person != null) {
-            imgPhoto.setImage(new Image("file:///" + person.getPhoto()));
+            if (person.getPhoto().equals(standardPhoto)) {
+                imgPhoto.setImage(new Image(person.getPhoto()));
+            } else {
+                imgPhoto.setImage(new Image("file:///" + person.getPhoto()));
+            }
             txtID.setText(person.getId().toString());
             txtName.setText(person.getName());
             txtEmail.setText(person.getEmail());

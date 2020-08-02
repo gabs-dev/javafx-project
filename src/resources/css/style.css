@@ -13,9 +13,23 @@
 }
 
 .principalButtons {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.principalButtons:hover {
     -fx-background-color: white;
-    -fx-background-radius: 20;
-    -fx-text-fill: #0277bd;
+    -fx-background-radius: 20 0 0 20;
+    -fx-text-fill: #436AAC;
+}
+
+.principalButtons:focused {
+    -fx-background-color: white;
+    -fx-background-radius: 20 0 0 20;
+    -fx-text-fill: #436AAC;
 }
 
 #anchorMain {
@@ -54,6 +68,58 @@
     -fx-text-fill: white;
 }
 
-.dialog-pane > .content.label {
+#vboxMenu {
+    -fx-background-color: linear-gradient(to bottom, #8929AD, #436AAC, #43B7B8);
+    -fx-background-radius: 0px 60px 0px 0px;
+}
+
+/*#anchorPrincipal {
     -fx-background-color: white;
+    /*top-left top-right bottom-rigth bottom-left
+    -fx-background-radius: 50px 0px 0px 50px;
+}*/
+
+#btnLogout {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-text-fill: #436AAC;
+}
+
+#btnRegister {
+    -fx-background-color: #8929AD;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #8929AD;
+    -fx-text-fill: white;
+}
+
+.table-view {
+    -fx-border-color: #8929AD;
+}
+
+.listButtons {
+    -fx-background-color: #8929AD;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+
+.updateButtons {
+    -fx-background-color: #8929AD;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+
+.forgotButtons {
+    -fx-background-color: #8929AD;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+
+.forgotButtons#btnCancel {
+    -fx-background-color: red;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
 }

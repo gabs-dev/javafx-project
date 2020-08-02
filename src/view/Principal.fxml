@@ -1,13 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainView" prefHeight="431.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrincipalController">
+<AnchorPane prefHeight="590.0" prefWidth="980.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrincipalController">
    <children>
-      <Button styleClass="principalButtons" fx:id="btnAddPerson" layoutX="23.0" layoutY="334.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="164.0" text="CADASTRAR PESSOA" />
-      <Button styleClass="principalButtons" fx:id="btnAddCompany" layoutX="201.0" layoutY="334.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="164.0" text="CADASTRAR EMPRESA" />
-      <Button styleClass="principalButtons" fx:id="btnListPeople" layoutX="378.0" layoutY="334.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="164.0" text="LISTAR PESSOA" />
-      <Button styleClass="principalButtons" fx:id="btnListCompanies" layoutX="556.0" layoutY="334.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="164.0" text="LISTAR EMPRESA" />
+      <BorderPane fx:id="mainPane" layoutY="1.0" prefHeight="590.0" prefWidth="980.0">
+         <left>
+            <VBox fx:id="vboxMenu" alignment="TOP_CENTER" fillWidth="false" prefHeight="505.0" prefWidth="234.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Cadastrar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="-115.0" top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button fx:id="btnAddPerson" mnemonicParsing="false" prefHeight="36.0" prefWidth="185.0" styleClass="principalButtons" text="Pessoa">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnAddCompany" mnemonicParsing="false" prefHeight="36.0" prefWidth="185.0" styleClass="principalButtons" text="Empresa">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label text="Listar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="-150.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button fx:id="btnListPeople" mnemonicParsing="false" prefHeight="36.0" prefWidth="185.0" styleClass="principalButtons" text="Pessoas">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnListCompanies" mnemonicParsing="false" prefHeight="36.0" prefWidth="185.0" styleClass="principalButtons" text="Empresas">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnLogout" alignment="CENTER" mnemonicParsing="false" prefHeight="36.0" prefWidth="97.0" text="Sair">
+                     <VBox.margin>
+                        <Insets left="-105.0" top="160.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fx:id="imgLogo" fitHeight="65.0" fitWidth="75.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../resources/image/system/icon_company.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="lblCompany" text="Company" textFill="#8929ad">
+                     <font>
+                        <Font name="DejaVu Sans Condensed Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Circle fx:id="userPhoto" fill="DODGERBLUE" radius="20.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                     <HBox.margin>
+                        <Insets left="630.0" />
+                     </HBox.margin>
+                  </Circle>
+                  <Label fx:id="lblUserName" text="User name" textFill="#8929ad">
+                     <font>
+                        <Font name="Open Sans Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="-15.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+      </BorderPane>
    </children>
 </AnchorPane>

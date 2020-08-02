@@ -38,9 +38,6 @@ public class RegisterPersonController implements Initializable {
     private PasswordField psfConfirmPassword;
 
     @FXML
-    private Button btnCancel;
-
-    @FXML
     private Button btnRegister;
 
     @FXML
@@ -48,24 +45,13 @@ public class RegisterPersonController implements Initializable {
 
     private String photoPath;
 
+    private String standardPhoto = "/resources/image/system/icon-photo.png";
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        photoPath = standardPhoto;
 
-        btnCancel.setOnMouseClicked((MouseEvent e) -> {
-            Navigation.close(RegisterPerson.getStage());
-            Navigation.openScreen(new Principal());
-        });
-
-        btnCancel.setOnKeyPressed((KeyEvent e) -> {
-            if(e.getCode() == KeyCode.ENTER) {
-                Navigation.close(RegisterPerson.getStage());
-                Navigation.openScreen(new Principal());
-            }
-        });
-
-        btnRegister.setOnMouseClicked((MouseEvent e) -> {
-            registerPerson();
-        });
+        btnRegister.setOnMouseClicked((MouseEvent e) -> registerPerson());
 
         btnRegister.setOnKeyPressed((KeyEvent e) -> {
             if(e.getCode() == KeyCode.ENTER) {
@@ -86,22 +72,39 @@ public class RegisterPersonController implements Initializable {
                 password = psfPassword.getText(),
                 confPassword = psfConfirmPassword.getText();
 
-        if(password.equals(confPassword)) {
-            Person p = new Person(name, email, password, photoPath);
-            PersonDao dao = new PersonDao();
-            try {
-                dao.add(p);
-                Navigation.openScreen(new Principal());
-                Alerts.showAlert("Sucesso", null, "Usuário cadastrado com sucesso", AlertType.INFORMATION);
-                Navigation.close(RegisterPerson.getStage());
-            } catch (DbException e) {
-                String message = "Erro ao cadastrar usuário";
-                message += "\n" + e.getMessage();
-                Alerts.showAlert("Erro", null, message, AlertType.ERROR);
+        if (!(name.equals("")) && !(email.equals("")) && !(password.equals("")) && !(confPassword.equals(""))) {
+            if (password.equals(confPassword)) {
+                if (new PersonDao().findByEmail(email) == null) {
+                    Person p = new Person(name, email, password, photoPath);
+                    PersonDao dao = new PersonDao();
+                    try {
+                        dao.add(p);
+                        clearFields();
+                        Alerts.showAlert("Sucesso", null,
+                                "Usuário cadastrado com sucesso", AlertType.INFORMATION);
+                    } catch (DbException e) {
+                        String message = "Erro ao cadastrar usuário";
+                        message += "\n" + e.getMessage();
+                        Alerts.showAlert("Erro", null, message, AlertType.ERROR);
+                    }
+                } else {
+                    Alerts.showAlert("Erro", null, "Email já cadastrado!", AlertType.ERROR);
+                }
+            } else {
+                Alerts.showAlert("Erro", null, "As senhas não coincidem!", AlertType.ERROR);
             }
         } else {
-            Alerts.showAlert("Erro", null, "As senhas não coincidem!", AlertType.ERROR);
+            Alerts.showAlert("Campos vazios", "",
+                    "É necessário que todos os campos sejam preenchidos!", AlertType.WARNING);
         }
+    }
+
+    private void clearFields() {
+        txtName.setText("");
+        txtEmail.setText("");
+        psfPassword.setText("");
+        psfConfirmPassword.setText("");
+        imgPhoto.setImage(new Image("/resources/image/system/sem-foto.png"));
     }
 
 }

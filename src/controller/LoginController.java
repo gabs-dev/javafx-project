@@ -1,6 +1,7 @@
 package controller;
 
 import application.Credits;
+import application.ForgotPassword;
 import application.Login;
 import application.Principal;
 import dao.PersonDao;
@@ -45,11 +46,15 @@ public class LoginController implements Initializable {
     @FXML
     private Label lblForgetPassword;
 
+    private static Person logged;
+
     private PersonDao dao;
+
+    private String standardPhoto = "/resources/image/system/icon-photo.png";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        userPhoto.setFill(new ImagePattern(new Image("/resources/image/system/icon-photo.png")));
+        userPhoto.setFill(new ImagePattern(new Image(standardPhoto)));
 
         dao = new PersonDao();
         List<Person> list = dao.findAll();
@@ -61,9 +66,13 @@ public class LoginController implements Initializable {
         txtUser.setOnKeyReleased((KeyEvent e) -> {
             Person p = getUser(list);
             if (p != null) {
-                userPhoto.setFill(new ImagePattern(new Image("file:///" + p.getPhoto())));
+                if (p.getPhoto().equals(standardPhoto)) {
+                    userPhoto.setFill(new ImagePattern(new Image(standardPhoto)));
+                } else {
+                    userPhoto.setFill(new ImagePattern(new Image("file:///" + p.getPhoto())));
+                }
             } else {
-                userPhoto.setFill(new ImagePattern(new Image("/resources/image/system/icon-photo.png")));
+                userPhoto.setFill(new ImagePattern(new Image(standardPhoto)));
             }
         });
 
@@ -83,10 +92,18 @@ public class LoginController implements Initializable {
             openCredits();
         });
 
+        lblForgetPassword.setOnMouseClicked((MouseEvent e) -> {
+            openForgetPassword();
+        });
+
     }
 
     private void openCredits() {
         Navigation.openScreen(new Credits());
+    }
+
+    private void openForgetPassword() {
+        Navigation.openScreen(new ForgotPassword());
     }
 
     private void login() {
@@ -95,6 +112,7 @@ public class LoginController implements Initializable {
         if (!(txtUser.getText().equals("")) && !(txtPassword.getText().equals(""))) {
             p = dao.findByEmail(txtUser.getText());
             if (p != null && p.getPassword().equals(txtPassword.getText())) {
+                setLogged(p);
                 Navigation.openScreen(new Principal());
                 Navigation.close(Login.getStage());
             } else {
@@ -112,6 +130,14 @@ public class LoginController implements Initializable {
             }
         }
         return null;
+    }
+
+    public static Person getLogged() {
+        return logged;
+    }
+
+    public static void setLogged(Person p) {
+        logged = p;
     }
 
 }

@@ -5,34 +5,38 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="594.0" prefWidth="644.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListPeopleController">
+<AnchorPane prefHeight="505.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListPeopleController">
    <children>
-      <TextField fx:id="txtSearch" layoutX="9.0" layoutY="59.0" prefHeight="26.0" prefWidth="418.0" promptText="Digite o nome da pessoa" />
-      <Button fx:id="btnSearch" layoutX="438.0" layoutY="59.0" mnemonicParsing="false" text="Pesquisar" />
-      <TableView fx:id="table" layoutX="9.0" layoutY="94.0" prefHeight="332.0" prefWidth="510.0">
+      <TextField fx:id="txtSearch" layoutX="39.0" layoutY="58.0" prefHeight="26.0" prefWidth="480.0" promptText="Digite o nome da pessoa" />
+      <TableView fx:id="table" layoutX="9.0" layoutY="93.0" prefHeight="368.0" prefWidth="510.0">
         <columns>
           <TableColumn fx:id="clmID" prefWidth="116.0" text="ID" />
           <TableColumn fx:id="clmName" minWidth="0.0" prefWidth="178.0" text="Nome" />
             <TableColumn fx:id="clmEmail" prefWidth="215.0" text="Email" />
         </columns>
       </TableView>
-      <Label layoutX="218.0" layoutY="14.0" text="Lista de Pessoas">
+      <Button fx:id="btnUpdate" layoutX="68.0" layoutY="472.0" styleClass="listButtons" mnemonicParsing="false" text="Atualizar Lista" />
+      <Button fx:id="btnDelete" layoutX="194.0" layoutY="472.0" styleClass="listButtons" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Deletar" />
+       <Button fx:id="btnEdit" layoutX="285.0" layoutY="472.0" styleClass="listButtons" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Editar" />
+      <Button fx:id="btnGeneratePDF" layoutX="376.0" layoutY="472.0" styleClass="listButtons" mnemonicParsing="false" text="Gerar PDF" />
+      <Label layoutX="279.0" layoutY="14.0" text="Lista de Pessoas">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnDelete" layoutX="542.0" layoutY="94.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Deletar" />
-       <Button fx:id="btnEdit" layoutX="542.0" layoutY="131.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Editar" />
-      <Button fx:id="btnUpdate" layoutX="525.0" layoutY="168.0" mnemonicParsing="false" text="Atualizar Lista" />
-       <Button fx:id="btnGoBack" layoutX="542.0" layoutY="240.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="← Voltar" />
-       <ImageView fx:id="imgPhoto" fitHeight="132.0" fitWidth="148.0" layoutX="9.0" layoutY="441.0" pickOnBounds="true" preserveRatio="true" />
-       <Label fx:id="lblID" layoutX="170.0" layoutY="466.0" />
-       <Label fx:id="lblName" layoutX="170.0" layoutY="497.0" />
-       <Label fx:id="lblEmail" layoutX="170.0" layoutY="532.0" />
-      <Button fx:id="btnGeneratePDF" layoutX="538.0" layoutY="205.0" mnemonicParsing="false" text="Gerar PDF" />
+       <ImageView fx:id="imgPhoto" fitHeight="132.0" fitWidth="148.0" layoutX="525.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" />
+       <Label fx:id="lblID" layoutX="525.0" layoutY="240.0" />
+       <Label fx:id="lblName" layoutX="525.0" layoutY="269.0" />
+       <Label fx:id="lblEmail" layoutX="525.0" layoutY="298.0" />
+      <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="9.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/image/system/search.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

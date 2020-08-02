@@ -118,7 +118,7 @@ public class PersonDao implements IDao<Person> {
         PreparedStatement st = null;
         ResultSet rs = null;
         List<Person> list = new ArrayList<>();
-        String sql = "SELECT * FROM person";
+        String sql = "SELECT * FROM person ORDER BY name";
         try {
             st = conn.prepareStatement(sql);
             rs = st.executeQuery();
